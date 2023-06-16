@@ -1,6 +1,11 @@
 # 271. Encode and Decode Strings
 </br>
 
+## Constraints
+- `1 <= strs.length <= 200`
+- `0 <= strs[i].length <= 200`
+- `strs[i]` contains any possible characters out of 256 valid ASCII characters.
+
 ## 题目难点
 - Encoding (and Decoding) Algorithm
     - length of string + delimiter ✅
@@ -21,3 +26,8 @@
             - Return decoded array of strings.
 
 - String Operations
+
+## Follow up
+Could you write a generalized algorithm to work on any possible set of characters?
+
+The first solution: length of string + delimiter ✅
