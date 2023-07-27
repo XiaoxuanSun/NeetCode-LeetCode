@@ -9,20 +9,51 @@
 Easy
 
 ## 题目难点
-- 本题重点是重新回顾JS中Closure
-    1. JavaScript Objects and Function Returns
-        - In JavaScript, functions can return objects, which are collections of related data and functions, often known as properties and methods.
-    2. JavaScript Objects and Limited Method Chaining
-        - Full method chaining:
-        ```javascript
-        let arr = [5, 2, 8, 1];
-        let result = arr.sort().reverse().join("-");
+- 本题重点是重新回顾JS中Closure和Objects
+    1. JavaScript Objects
+        - key-value mapping;
+
+        - key: must be strings;
+
+        - value: can be anything: strings, functions, other objects, etc.
+
+        - There are three ways to access values on an object:
+
+            1. Dot Notation.
+
+            2. Bracket Notation. This is used when the key isn't valid variable name. For example ".123".
+
+            3. Destructuring Syntax. This is most useful when accessing multiple values at once.
+
+            ```javascript
+            const { num, str} = object;
+            console.log(num, str); // 1 "Hello World"
+            ```
+
+    2. Classes
         
-        console.log(result); // "8-5-2-1"
+        JavaScript implements classes with special objects call prototypes. All the methods (in this case greet) are functions stored on the object's prototype.
+
+        ```javascript
+        const alice = {
+            name: "Alice",
+            age: 25,
+            __proto__: {
+                greet: function() {
+                console.log("My name is", this.name);
+                }
+            }
+        };
+        alice.greet(); // Logs: "My name is Alice"
         ```
-        - 本题中，因为`toBe`和`notToBe`方法不return原来的object，而是return true或throw an error，所以是limited method chaining。
-        - Method Chaining实现依靠function return an object, containing methods
-    3. JavaScript Error Handling
+
+        "How can you access the greet method even though it's not a key on the alice object"?
+
+            The reason is that accessing keys on an object is actually slightly more complicated than just looking at the object's keys. There is actually an algorithm that traverse the prototype chain. First, JavaScript looks at the keys on the object. If the requested key wasn't found, it then looks on the keys of the prototype object. If it still wasn't found, it looks at the prototype's prototype, and so on. This is how inheritance is implemented in JavaScript!
+
+            You might also wonder why JavaScript has this strange prototype concept at all. Why not just store the functions on the object itself? The answer is efficiency. Every time a new Person is created, age and name fields are added to the object. However only a single reference to the prototype object is added. So no matter how many instances of Person are created or how many methods are on the class, only a single prototype object is generated.
+    
+    3. Proxies
     ```javascript
     function checkName(name) {
         if (name === '') {
@@ -38,8 +69,8 @@ Easy
     }
     ```
 - 解题方法，两种方式
-    1. Function Expression
-    2. Using ES6 Classes
+    1. Closure
+    2. Classes
 
 - Why this problem is important? (Interview Tips)
     - What does it mean when functions return objects or other functions in JavaScript?
